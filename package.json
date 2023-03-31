@@ -2,7 +2,7 @@
   "name": "deperrito-redux.me",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "node index.js",
