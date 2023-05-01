@@ -19,29 +19,26 @@ client.once("ready", () => {
 })
 
 client.on("messageCreate", async (message) => {
-    setTimeout(async () => {
-        const command = message.content.split(" ");
+    const command = message.content.split(" ");
 
-        if (command[0] == '$pls') {
-            switch (command[1]) {
-                case 'help':
-                    message.channel.send("///LISTA DE COMANDOS///");
-                case 'perrea':
-                    console.log("ahi ahi");
-                    message.channel.send("*perrea guarro e intenso*");
-                    break;
-                case 'kys':
-                    await message.channel.send("*se desmaterializa*");
-                    console.log("Process exited");
-                    process.exit(1);
-                    break;
-                default:
-                    message.channel.send("Invalid command");
-                    break;
-            }
+    if (command[0] == '$pls') {
+        switch (command[1]) {
+            case 'help':
+                await message.channel.send("///LISTA DE COMANDOS///");
+            case 'perrea':
+                console.log("ahi ahi");
+                await message.channel.send("*perrea guarro e intenso*");
+                break;
+            case 'kys':
+                await message.channel.send("*se desmaterializa*");
+                console.log("Process exited");
+                process.exit(1);
+                break;
+            default:
+                await message.channel.send("Invalid command");
+                break;
         }
-    }, 2000)
+    }
 })
-
 
 client.login(process.env.DISCORD_TOKEN)
