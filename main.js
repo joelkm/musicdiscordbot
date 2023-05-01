@@ -26,6 +26,7 @@ client.on("messageCreate", async (message) => {
             case 'help':
                 message.channel.send("///LISTA DE COMANDOS///");
             case 'perrea':
+                console.log("ahi ahi");
                 message.channel.send("*perrea guarro e intenso*");
                 break;
             default:
