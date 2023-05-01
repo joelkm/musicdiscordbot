@@ -18,7 +18,7 @@ client.once("ready", () => {
     console.log(`Connected as ${client.user.tag}`);
 })
 
-client.on("messageCreate", async (message) => {
+client.on("message", async (message) => {
     const command = message.content.split(" ");
 
     if (command[0] == '$pls') {
@@ -28,6 +28,10 @@ client.on("messageCreate", async (message) => {
             case 'perrea':
                 console.log("ahi ahi");
                 message.channel.send("*perrea guarro e intenso*");
+                break;
+            case 'kys':
+                console.log("Process exited");
+                message.channel.send("*se desmaterializa*");
                 break;
             default:
                 message.channel.send("Invalid command");
