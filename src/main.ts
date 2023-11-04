@@ -1,8 +1,12 @@
+import fs from 'fs';
+import path from 'path';
+
 import dotenv from 'dotenv';
 dotenv.config();
+
 import ytdl from 'ytdl-core';
 
-import { Client, GatewayIntentBits, VoiceChannel } from 'discord.js';
+import { Client, GatewayIntentBits, Events, Collection, VoiceChannel } from 'discord.js';
 
 
 /*
@@ -20,55 +24,40 @@ const client = new Client({
     ]
 })
 
+const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 
-client.once("ready", () => {
-    console.log(`Connected as ${client.user!.tag}`);
-})
+client.once(Events.ClientReady, c => {
+	console.log(`Ready! Logged in as ${c.user.tag}`);
+});
+
+client.commands = new Collection();
+
+const foldersPath = path.join(__dirname, 'commands');
+const commandFolders = fs.readdirSync(foldersPath);
+
+for (const folder of commandFolders) {
+	const commandsPath = path.join(foldersPath, folder);
+	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+	for (const file of commandFiles) {
+		const filePath = path.join(commandsPath, file);
+		const command = require(filePath);
+		// Set a new item in the Collection with the key as the command name and the value as the exported module
+		if ('data' in command && 'execute' in command) {
+			client.commands.set(command.data.name, command);
+		} else {
+			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+		}
+	}
+};
 
 client.on("message", async (message) => {
-    const command = message.content.split(" ");Morko
+    const command = message.content.split(" ");
 
     // trycatch para mensajes con espacios en blanco y comandos semicorrectos
     if (command[0] == '$pls') {
         switch (command[1]) {
-            case 'help':
-                await message.channel.send("///LISTA DE COMANDOS///");
-                break;
-            case 'perrea':
-                console.log("ahi ahi");
-                await message.channel.send("*perrea guarro e intenso*");
-                break;
             case 'play':
-                const voiceChannel = message.member.voice.channel;
-                if (!voiceChannel) {
-                    return message.reply('You must be in a voice channel to use this command.');
-                }
-
-                const connection = joinVoiceChannel({
-                    channelId: voiceChannel.id,
-                    guildId: voiceChannel.guild.id,
-                });
-
-                try {
-                    await entersState(connection, VoiceConnectionStatus.Ready, 30e3);
-                } catch (error) {
-                    connection.destroy();
-                    throw error;
-                }
-
-                const stream = ytdl(command[2], { filter: 'audioonly', quality: 'highestaudio' });
-                /*
-                const dispatcher = connection.play(stream);
                 
-                dispatcher.on('finish', () => {
-                    voiceChannel.leave();
-                });
-                */
-                break;
-            case 'kys':
-                await message.channel.send("*se desmaterializa*");
-                console.log("Process exited");
-                process.exit(1);
                 break;
             default:
                 await message.channel.send("Invalid command");
@@ -77,4 +66,4 @@ client.on("message", async (message) => {
     }
 })
 
-client.login(process.env.DISCORD_TOKEN)
+client.login(DISCORD_TOKEN)
