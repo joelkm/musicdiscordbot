@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
-    "start": "node src/main.js",
+    "start": "node dist/src/main.js",
     "dev": "concurrently -n TS,JS -c cyan,yellow --group true --kill-others \"npm run watch-ts\" \"npm run watch-js\"",
-    "watch-js": "nodemon src/main.js",
+    "watch-js": "nodemon dist/src/main.js",
     "watch-ts": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

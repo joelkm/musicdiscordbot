@@ -14,7 +14,7 @@ import { Client, GatewayIntentBits, Events, Collection, VoiceChannel } from 'dis
     https://www.reddit.com/r/Discord_Bots/comments/p2b970/joining_a_voicechannel_in_discordjs_v13/
 */
 
-const client = new Client({
+const client:any = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
@@ -26,7 +26,7 @@ const client = new Client({
 
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 
-client.once(Events.ClientReady, c => {
+client.once(Events.ClientReady, (c:any) => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
 });
 

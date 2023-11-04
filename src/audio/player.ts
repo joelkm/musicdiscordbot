@@ -8,7 +8,7 @@ import {
     VoiceConnectionStatus,
 } from '@discordjs/voice';
 
-import { createDiscordJSAdapter } from './adapter';
+// import { createDiscordJSAdapter } from './adapter';
 
 const player = createAudioPlayer();
 
