@@ -50,20 +50,4 @@ for (const folder of commandFolders) {
 	}
 };
 
-client.on("message", async (message) => {
-    const command = message.content.split(" ");
-
-    // trycatch para mensajes con espacios en blanco y comandos semicorrectos
-    if (command[0] == '$pls') {
-        switch (command[1]) {
-            case 'play':
-                
-                break;
-            default:
-                await message.channel.send("Invalid command");
-                break;
-        }
-    }
-})
-
 client.login(DISCORD_TOKEN)
